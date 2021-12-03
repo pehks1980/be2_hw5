@@ -1,0 +1,11 @@
+#posgres migrations make: (dir called `migrations`)<br>
+-- go get -tags 'postgres' -u github.com/golang-migrate/migrate/cmd/migrate or brew install golang-migrate (mac)<br>
+-- migrate create -seq -ext sql -dir migrations init_schema<br>
+-- clean db eg 'a5' must exist: psql -h localhost -U postgres -w -c "create database a5;"<br>
+# use:
+init: migrate -database "postgres://postuser:password@192.168.1.204:5432/a5?sslmode=disable" -path migrations up (put your creds)<br>
+rollback: migrate -database "postgres://postuser:password@192.168.1.204:5432/a5?sslmode=disable" -path migrations down<br>
+
+#DDL for shard_0 shard_1
+migrate -database "postgres://test:test@localhost:8181/test?sslmode=disable" -path migrations up
+migrate -database "postgres://test:test@localhost:8191/test?sslmode=disable" -path migrations up
